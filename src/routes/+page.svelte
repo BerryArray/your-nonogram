@@ -26,8 +26,8 @@
     let columnChoices = [5,10,15]
     let rowChoices = [5,10,15]
     
-    let puzzleTitle = "TestTitle"
-    let puzzleDescription = "TestDescription"
+    let puzzleTitle = "Insert Title"
+    let puzzleDescription = "Insert Description"
     
     let editMode = false
     
@@ -37,7 +37,7 @@
     let savedLevels : Level[] = []
     let cachedLevels : string[] = []
 
-    const maxUploadsPerDay = 12;
+    const maxUploadsPerDay = 8;
     let uploadsToday = 0;
     
     const maxDownloadsPerDay = 150;
@@ -811,8 +811,6 @@
         console.error(error);
         });
     }
-    
-
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -839,9 +837,9 @@
     <div class="level-list">
         {#each savedLevels as level, i}
             <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <div>
+            <div class="level-listing">
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <div>{level.title}</div>
+                <div><b>{level.title}</b></div>
                 <div>{level.columns}x{level.rows}</div>
                 <button on:click={() => loadLevel(savedLevels[i])}>Load</button>
                 <button on:click={() => {savedLevels.splice(i, 1); savedLevels = savedLevels}}>Delete</button>
@@ -913,7 +911,7 @@
         <input type="text" placeholder="Your title goes here!" bind:value={puzzleTitle} maxlength="50">
         <textarea cols="34" rows="15" placeholder="Your description goes here!" bind:value={puzzleDescription} maxlength="700"></textarea>
     {:else}
-        <div>{puzzleTitle}</div>
+        <div><b>{puzzleTitle}</b></div>
         <div>{puzzleDescription}</div>
     {/if}
     
@@ -942,10 +940,20 @@
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     }
 
+    :global(html) {
+        overflow: hidden;
+    }
+
     .background {
         width: 100vw;
         height: 100vh;
         z-index: -100;
+    }
+
+    .level-listing {
+        background-color: rgb(219, 237, 243);
+        padding: 7px;
+        border-radius: 5px;
     }
 
     .help-popup {
@@ -973,7 +981,7 @@
         width: 350px;
         position: absolute;
         top: 0;
-        background-color: lightblue;
+        background-color: rgb(189, 227, 240);
         gap: 7px;
         padding-top: 7px;
     }
@@ -998,7 +1006,7 @@
     }
     
     .level-list > div {
-        margin-top: 15px;
+        margin-bottom: 15px;
     }
     
     .right-sidebar {
